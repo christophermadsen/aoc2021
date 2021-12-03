@@ -5,11 +5,13 @@
 #+STARTUP: showall
 #+PROPERTY: header-args :exports both :session advent :kernel base :cache no
 
-* Day 1
-** Imports and data
+* Imports
 #+begin_src python
 import numpy as np
+#+end_src
 
+* Day 1
+#+begin_src python
 with open("1.txt", "r") as f:
     data = np.array(list(map(int, f.read().split())))
 
@@ -36,7 +38,6 @@ sum(np.ediff1d(data[:-2]+data[1:-1]+data[2:])>0)
 : 1797
 
 * Day 2
-** Imports and data
 #+begin_src python
 with open("2.txt", "r") as f:
     data = f.read().split("\n")[:-1]
@@ -84,12 +85,8 @@ x*y
 #+RESULTS:
 : 1942068080
 
-
 * Day 3
-** Imports and data
 #+begin_src python
-import numpy as np
-
 with open("3.txt", "r") as f:
     data = f.read().split()
 
@@ -114,24 +111,16 @@ gamma*epsilon
 
 ** Part 2
 #+begin_src python
-copy = sorted(data)
-for i in range(1, len(data[0]) + 1):
-    mid = copy[len(copy)//2][0:i]
-    copy = [s for s in copy if s.startswith(mid)]
-    if len(copy) == 1:
-        ogr = int(copy[0], 2)
-        break
+def calc(copy=sorted(data), replace=False):
+    for i in range(1, len(copy[0]) + 1):
+        mid = copy[len(copy)//2][0:i]
+        if replace: mid = mid[:-1] + {"0": "1", "1": "0"}[mid[-1]]
+        copy = [s for s in copy if s.startswith(mid)]
+        if len(copy) == 1:
+            return int(copy[0], 2)
+    return 1
 
-copy = sorted(data)
-for i in range(1, len(data[0]) + 1):
-    mid = copy[len(copy)//2][0:i]
-    mid = mid[:-1] + {"0": "1", "1": "0"}[mid[-1]]
-    copy = [s for s in copy if s.startswith(mid)]
-    if len(copy) == 1:
-        csr = int(copy[0], 2)
-        break
-
-ogr*csr
+calc() * calc(replace=True)
 #+end_src
 
 #+RESULTS:
