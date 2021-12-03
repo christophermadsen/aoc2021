@@ -21,7 +21,6 @@ len(data)
 #+RESULTS:
 : 2000
 
-** Part 1
 #+begin_src python
 sum(np.ediff1d(data)>0)
 #+end_src
@@ -29,7 +28,6 @@ sum(np.ediff1d(data)>0)
 #+RESULTS:
 : 1766
 
-** Part 2
 #+begin_src python
 sum(np.ediff1d(data[:-2]+data[1:-1]+data[2:])>0)
 #+end_src
@@ -48,7 +46,6 @@ len(data)
 #+RESULTS:
 : 1000
 
-** Part 1
 #+begin_src python
 x, y = [0]*2
 for row in data:
@@ -66,7 +63,6 @@ x*y
 #+RESULTS:
 : 2039912
 
-** Part 2
 #+begin_src python
 x, y, a = [0]*3
 for row in data:
@@ -96,7 +92,6 @@ len(data)
 #+RESULTS:
 : 1000
 
-** Part 1
 #+begin_src python
 ones = np.array([0]*len(data[0]))
 for row in data:
@@ -109,7 +104,6 @@ gamma*epsilon
 #+RESULTS:
 : 4174964
 
-** Part 2
 #+begin_src python
 def calc(copy=sorted(data), replace=False):
     for i in range(1, len(copy[0]) + 1):
