@@ -1,0 +1,85 @@
+#+TITLE: ADVENT OF CODE
+#+AUTHOR: Berke Filiz
+#+EMAIL: edu.berkefiliz@gmail.com
+#+DATE: Wednesday, 1 December 2021
+#+STARTUP: showall
+#+PROPERTY: header-args :exports both :session advent :kernel base :cache no
+
+* Day 1
+** Imports and data
+#+begin_src python
+import numpy as np
+
+with open("1.txt", "r") as f:
+    data = np.array(list(map(int, f.read().split())))
+
+len(data)
+#+end_src
+
+#+RESULTS:
+: 2000
+
+** Part 1
+#+begin_src python
+sum(np.ediff1d(data)>0)
+#+end_src
+
+#+RESULTS:
+: 1766
+
+** Part 2
+#+begin_src python
+sum(np.ediff1d(data[:-2]+data[1:-1]+data[2:])>0)
+#+end_src
+
+#+RESULTS:
+: 1797
+
+ Day 1
+** Imports and data
+#+begin_src python
+with open("2.txt", "r") as f:
+    data = f.read().split("\n")[:-1]
+
+len(data)
+#+end_src
+
+#+RESULTS:
+: 1000
+
+** Part 1
+#+begin_src python
+x, y = [0]*2
+for row in data:
+    d, v = row.split(" ")
+    v = int(v)
+    if d == "forward":
+        x += v
+    elif d == "down":
+        y += v
+    elif d == "up":
+        y -= v
+x*y
+#+end_src
+
+#+RESULTS:
+: 2039912
+
+** Part 2
+#+begin_src python
+x, y, a = [0]*3
+for row in data:
+    d, v = row.split(" ")
+    v = int(v)
+    if d == "forward":
+        x += v
+        y += a*v
+    elif d == "down":
+        a += v
+    elif d == "up":
+        a -= v
+x*y
+#+end_src
+
+#+RESULTS:
+: 1942068080
