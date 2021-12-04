@@ -29,7 +29,7 @@ sum(np.ediff1d(data)>0)
 : 1766
 
 #+begin_src python
-sum(np.ediff1d(data[:-2]+data[1:-1]+data[2:])>0)
+sum(np.ediff1d(data[:-2] + data[1:-1] + data[2:]) > 0)
 #+end_src
 
 #+RESULTS:
@@ -131,7 +131,7 @@ len(data)
 #+RESULTS:
 : 101
 
-The following code will print a list in the order tables are finiahed and their
+The following code will print a list in the order tables are finished and their
 value at the time. It can be used to answer both of the parts.
 
 #+begin_src python
