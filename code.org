@@ -119,3 +119,163 @@ calc() * calc(replace=True)
 
 #+RESULTS:
 : 4474944
+
+* Day 4
+#+begin_src python
+with open("4.txt", "r") as f:
+    data = f.read().split("\n\n")
+
+len(data)
+#+end_src
+
+#+RESULTS:
+: 101
+
+The following code will print a list in the order tables are finiahed and their
+value at the time. It can be used to answer both of the parts.
+
+#+begin_src python
+class Board:
+    def __init__(self, numbers, id):
+        self.numbers = [
+            [int(n) for n in row.split()] for row in numbers.split("\n")
+        ]
+        self.marked = [[False for _ in range(5)] for _ in range(5)]
+        self.id = id
+        self.done = False
+
+    def isFinished(self):
+        return any([all(row) for row in self.marked]) or any(
+            [all(row) for row in list(map(list, zip(*self.marked)))]
+        )
+
+    def value(self, number):
+        unmarked_sum = 0
+        for i in range(5):
+            for j in range(5):
+                if not self.marked[i][j]:
+                    unmarked_sum += self.numbers[i][j]
+        return number * unmarked_sum
+
+    def mark(self, number):
+        if not self.done:
+            for i in range(5):
+                for j in range(5):
+                    if number == self.numbers[i][j]:
+                        self.marked[i][j] = True
+                        if not self.done and self.isFinished():
+                            print(self.id, "\t", self.value(number))
+                            self.done = True
+        return self
+
+
+bingo = list(map(int, data[0].split(",")))
+boards = [Board(data[i], i) for i in range(1, len(data) - 1)]
+
+for n in bingo:
+    boards = [board.mark(n) for board in boards]
+#+end_src
+
+#+RESULTS:
+#+begin_example
+30	 58412
+87	 52056
+3	 70942
+37	 25116
+68	 67252
+69	 64124
+2	 13728
+67	 12672
+17	 41860
+23	 45360
+47	 42840
+48	 36456
+56	 2466
+72	 1893
+80	 1425
+45	 2576
+60	 2604
+6	 40194
+7	 42714
+81	 30618
+54	 39750
+86	 22800
+78	 56693
+70	 6784
+75	 7904
+92	 7952
+97	 10000
+11	 28536
+32	 26158
+29	 75200
+43	 70406
+99	 47094
+19	 47355
+50	 34573
+25	 41395
+28	 44965
+46	 50405
+14	 30723
+53	 26117
+64	 19747
+18	 5232
+35	 5664
+61	 8364
+83	 5364
+93	 5148
+95	 3840
+10	 35340
+38	 48108
+77	 40128
+91	 30476
+16	 33835
+55	 33701
+13	 4345
+15	 39928
+26	 26722
+44	 35898
+12	 48411
+41	 29997
+49	 45639
+52	 41679
+59	 47916
+79	 55143
+66	 21600
+89	 25542
+21	 29165
+24	 40470
+71	 51680
+62	 296
+74	 658
+82	 15466
+94	 34928
+9	 12274
+33	 14994
+36	 17000
+51	 15810
+57	 9656
+84	 15470
+20	 15488
+40	 45232
+1	 37380
+90	 30349
+4	 18532
+58	 34768
+5	 15360
+39	 14928
+63	 15984
+22	 25956
+65	 21924
+73	 48216
+88	 29484
+27	 20482
+76	 22932
+96	 16356
+98	 26680
+34	 18040
+85	 615
+8	 2114
+31	 2415
+42	 10030
+#+end_example
+#+RESULTS:
